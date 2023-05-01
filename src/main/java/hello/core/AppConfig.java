@@ -14,19 +14,33 @@ import org.springframework.context.annotation.Configuration;
 @Configuration // 어플리케이션의 구성정보를 담당한다는 뜻
 public class AppConfig {
 
+    // @Bean memberService -> new MemoryMemberRepository()
+    // @Bean orderService -> new MemoryMemberRepository()
+
+    // call AppConfig.memberService
+    // call AppConfig.memberRepository
+    // call AppConfig.memberRepository
+    // call AppConfig.orderRepository
+    // call AppConfig.memberRepository
+
+    // 하지만 memberRepository는 한 번만 호출된다.(순서는 보장되지 않는다.)
+
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         // 생성자 주입
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemoryMemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
